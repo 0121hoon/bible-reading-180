@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f5ef">
+<title>공동체성경읽기 · 180일 통독</title>
+<style>
+:root{--bg:#f7f5ef;--paper:#fff;--ink:#242820;--muted:#74786f;--line:#e7e4da;--green:#356b50;--green-soft:#e9f2eb;--gold:#bd9142;--shadow:0 12px 34px rgba(43,48,37,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.5}
+.wrap{width:min(1080px,calc(100% - 32px));margin:0 auto;padding:34px 0 56px}.hero{background:linear-gradient(135deg,#243d32,#426a51);color:#fff;border-radius:24px;padding:30px 30px 26px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"✳";position:absolute;right:25px;top:-42px;font-size:190px;color:#ffffff12}.eyebrow{font-size:12px;letter-spacing:.16em;color:#d5e4d7;font-weight:700}.hero h1{font-size:clamp(25px,4vw,38px);line-height:1.2;margin:10px 0}.hero p{margin:0;color:#e4eee5;font-size:14px}.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.stat{background:#ffffff16;border:1px solid #ffffff24;border-radius:14px;padding:10px 14px;min-width:112px}.stat b{display:block;font-size:21px}.stat span{font-size:11px;color:#dce9de}.progress{height:7px;background:#ffffff30;border-radius:99px;margin-top:16px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#d9c18b;border-radius:99px;transition:width .2s}
+.today{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin:18px 0;box-shadow:var(--shadow)}.today small{color:var(--muted);font-weight:700}.today h2{font-size:20px;margin:3px 0}.today p{margin:0;color:var(--muted);font-size:13px}.yt{display:inline-flex;align-items:center;gap:7px;text-decoration:none;background:#fff2f0;color:#b52d24;border:1px solid #f4d7d3;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;white-space:nowrap}.yt:hover{background:#ffe7e3}.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:20px 0 14px}.search{flex:1;min-width:190px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-size:14px;outline:none}.search:focus{border-color:var(--green)}.filter{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 13px;font-size:13px;color:var(--ink)}.hint{font-size:12px;color:var(--muted);margin:0 0 12px}.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.item{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 13px;min-width:0;transition:.15s}.item.done{background:var(--green-soft);border-color:#d3e4d7}.check{width:21px;height:21px;accent-color:var(--green);cursor:pointer}.day{font-size:13px;color:#356b50;font-weight:700}.passage{font-weight:750;font-size:15px;margin-top:1px}.date{font-size:11px;color:var(--muted);margin-top:2px}.item-actions{display:flex;align-items:center;gap:7px}.item a{font-size:11px;color:#28734b;text-decoration:none;border:1px solid #cfe3d5;background:#eff7f0;border-radius:9px;padding:7px 9px;white-space:nowrap}
+.item a.no-video{color:#858585;border-color:#e2e2e2;background:#f5f5f5}
+.item a:hover{filter:brightness(.97)}
+.item a:hover{background:#fff1ee}
+.item a.no-video:hover{filter:none;background:#f5f5f5;color:#858585;border-color:#e2e2e2;cursor:default}
+.yt.no-video,.yt.no-video:hover{background:#f5f5f5;color:#858585;border-color:#e2e2e2;cursor:default}
+.item.today-item{outline:2px solid var(--gold);outline-offset:1px}.tag{font-size:10px;color:#8a6729;background:#f8f0dc;border-radius:99px;padding:3px 7px;font-weight:700}.empty{grid-column:1/-1;text-align:center;padding:36px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:14px}.footer{margin-top:24px;padding:18px 4px;color:var(--muted);font-size:12px}.footer a{color:var(--green)}
+@media(max-width:650px){.wrap{width:calc(100% - 22px);padding-top:14px}.hero{padding:23px 20px;border-radius:19px}.today{align-items:flex-start;flex-direction:column}.yt{width:100%;justify-content:center}.list{grid-template-columns:1fr}.item{padding:11px 12px}.stats{gap:7px}.stat{min-width:95px;padding:8px 10px}}
+
+/* Dashboard refresh */
+.wrap{max-width:900px;padding:24px 0 42px}.hero{padding:27px 26px 23px;border-radius:22px}.hero h1{font-size:clamp(24px,5vw,34px)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.stat{min-width:0;padding:11px 13px}.stat b{font-size:23px}.today{display:block;margin:16px 0;padding:18px;border-radius:18px}.today h2{font-size:23px;margin:6px 0}.today p{margin:0 0 13px}.today-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.today-actions .yt{flex:1;justify-content:center}.today-done{border:1px solid #cbd9cd;background:#edf4ee;color:#315b43;border-radius:12px;padding:11px 14px;font-weight:750;cursor:pointer}.today-done.is-done{background:#356b50;color:white;border-color:#356b50}.journey{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px 18px;margin:16px 0;box-shadow:var(--shadow)}.journey-head{display:flex;justify-content:space-between;align-items:end;gap:10px}.journey-head b{font-size:20px}.journey-head small{color:var(--muted)}.journey-progress{height:10px;background:#e8ece6;border-radius:99px;overflow:hidden;margin:11px 0 7px}.journey-progress i{display:block;height:100%;width:0;background:#6c946f;border-radius:99px;transition:width .2s}.journey-foot{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.calendar{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;margin:16px 0;box-shadow:var(--shadow)}.calendar-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.calendar-title h3{margin:0;font-size:16px}.calendar-title button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 11px;cursor:pointer}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal-day{min-height:34px;display:flex;align-items:center;justify-content:center;border-radius:9px;font-size:12px;color:#6f756c}.cal-day.week{font-weight:700;color:#888}.cal-day.done{background:#dcebdd;color:#315b43;font-weight:800}.cal-day.is-today{outline:2px solid #bd9142;outline-offset:-1px;font-weight:800}.cal-day.out{opacity:0}.tools{margin:18px 0 12px}.tool-extra{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.tool-extra button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;color:var(--ink);cursor:pointer;font-size:12px}.hint{line-height:1.6}.bulk-panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 16px;margin:12px 0 16px}.bulk-panel>p{font-size:12px;color:var(--muted);margin:5px 0 10px;line-height:1.6}.bulk-panel .tool-extra{margin:8px 0}.range-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.range-tools label{font-size:12px;color:var(--muted)}.range-tools input{width:66px;border:1px solid var(--line);border-radius:8px;padding:8px}.range-tools button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-size:12px;cursor:pointer}.bulk-panel small{display:block;color:var(--muted);font-size:11px;margin-top:9px}.item{border-radius:13px}.item.today-item{outline-offset:0}.footer{border-top:1px solid var(--line);line-height:1.8}
+@media(max-width:650px){.wrap{padding-top:12px}.hero{padding:22px 18px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.stat{padding:8px 9px}.stat b{font-size:20px}.journey{padding:15px}.today h2{font-size:21px}.calendar{padding:13px}.cal-day{min-height:31px;font-size:11px}.today-actions{display:grid;grid-template-columns:1fr}.today-actions .yt{width:100%}}
+.hero-sub{font-size:13px;font-weight:700;color:#d9c18b;margin:-4px 0 10px}
+.today #todayLabel{display:block;font-size:14px;font-weight:800;color:#356b50}
+/* 로고 / 통독표형 목록 / 카톡 문구 / 맨 위로 */
+.logo-wrap{display:inline-flex;align-items:center;background:#fff;border-radius:14px;padding:6px 14px;margin:0 0 14px;box-shadow:0 4px 14px rgba(0,0,0,.14)}.logo-wrap img{display:block;height:54px;width:auto}
+.today #todayLabel{display:block;font-size:14px;font-weight:800;color:#356b50}
+.list{display:block;column-count:2;column-gap:0;column-rule:1px solid var(--line);background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.list .item{grid-template-columns:26px 54px 1fr auto;gap:10px;padding:10px 12px;margin:0;border:0;border-bottom:1px solid var(--line);border-radius:0;break-inside:avoid}
+.list .item.done{background:var(--green-soft)}
+.list .item.today-item{outline:2px solid var(--gold);outline-offset:-2px}
+.list .dnum{font-size:15px;font-weight:800;color:#356b50;white-space:nowrap}
+.list .mid{min-width:0}.list .mid .passage{font-size:16px;margin:0}.list .mid .day{font-size:13px;color:#356b50;font-weight:700;margin:0 0 1px}
+.list .empty{column-span:all;border:0;border-radius:0}
+.item a.yt-icon{display:inline-flex;align-items:center;justify-content:center;padding:8px 6px;border:0;background:none;border-radius:8px;line-height:0}.item a.yt-icon:hover{background:none;filter:brightness(.9)}
+@keyframes flash{0%{background:#fff0b8}100%{background:transparent}}.list .item.flash{animation:flash 1.6s ease}
+.cal-day.go{cursor:pointer}.cal-day.go:hover{background:#eef3ee}.cal-day.done.go:hover{background:#cfe3d2}.cal-day.go:focus-visible{outline:2px solid #356b50}
+.kakao{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:16px 0;box-shadow:var(--shadow)}.kakao b{font-size:17px}.kakao-help{font-size:12px;color:var(--muted);margin:4px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid #e2d3a8;background:#fffaf0;color:#7a5c1f;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer}.chip.read{border-color:#cfe3d5;background:#eff7f0;color:#356b50}.chip.on{background:#356b50;border-color:#356b50;color:#fff}
+.kakao-preview{margin:12px 0;padding:12px 14px;background:#f7f5ef;border-radius:12px;font-size:15px;font-weight:700;line-height:1.5;word-break:keep-all;user-select:all}
+.kakao-copy{width:100%;border:0;border-radius:12px;padding:13px;background:#356b50;color:#fff;font-size:15px;font-weight:800;cursor:pointer}.kakao-copy:disabled{background:#b9c7be;cursor:default}
+.to-top{position:fixed;right:16px;bottom:18px;width:46px;height:46px;border-radius:50%;border:0;background:#356b50;color:#fff;font-size:18px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}.to-top.show{opacity:1;pointer-events:auto}
+@media(max-width:700px){.list{column-count:1}.logo-wrap img{height:48px}}
+
+.hero{background:#fff;color:#243d32;border:1px solid #e3e6dc;position:relative}
+.hero:after{display:none!important;content:none!important}
+.hero-emblem{position:absolute;top:18px;right:20px;height:58px;width:auto}
+.hero h1{color:#243d32;padding-right:72px}
+.hero p{color:#5b6056}
+.hero-sub{color:#8a6729;padding-right:72px}
+.stat{background:#eef5ef;border:1px solid #d3e4d7;color:#243d32}
+.stat b{color:#243d32}.stat span{color:#5b6056}
+.progress{background:#e8ece6}.progress i{background:#426a51}
+.hero-journey{margin-top:16px}.hero-journey .journey-head small{color:#5b6056;font-size:12px}.hero-journey .journey-head b{display:block;font-size:20px;color:#243d32}.hero-journey #journeyPercent{font-size:15px;font-weight:800;color:#356b50}.journey-progress i{display:block;height:100%;width:0;background:#426a51;border-radius:99px;transition:width .2s}
+
+.panel{background:#fff;border:1px solid var(--line);border-radius:17px;margin:16px 0;box-shadow:var(--shadow);overflow:hidden}
+.panel>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px;font-weight:800;font-size:17px;min-height:48px}
+.panel>summary::-webkit-details-marker{display:none}
+.panel>summary small{margin-left:auto;color:var(--muted);font-size:12px;font-weight:600}
+.panel>summary::after{content:"▾";color:#356b50;font-size:18px;transition:transform .2s}
+.panel[open]>summary::after{transform:rotate(180deg)}
+.panel[open]>summary{border-bottom:1px solid var(--line);background:#f4f8f4}
+.panel-body{padding:14px 16px 16px}
+.panel .list{margin-top:8px}
+.manage .group{padding:14px 0;border-bottom:1px solid var(--line)}
+.manage .group:first-child{padding-top:2px}
+.manage .group:last-child{border-bottom:0;padding-bottom:0}
+.manage h4{margin:0 0 9px;font-size:13px;color:#356b50}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:12px 6px;font-size:14px;color:var(--ink);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:#356b50;color:#fff;font-weight:800}
+.manage .range-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.manage .range-tools label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.manage .range-tools input{width:100%;box-sizing:border-box;font-size:16px;padding:10px}
+.manage .range-tools button{padding:12px 8px;font-size:14px;border-radius:10px;border:1px solid #356b50;background:#fff;color:#356b50;font-weight:700}
+.manage .range-tools #checkRange{background:#356b50;color:#fff}
+.manage .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.manage .pair button,.manage #clearAllChecks{border:1px solid var(--line);background:#f7f9f6;border-radius:10px;padding:12px 8px;font-size:14px;color:var(--ink);cursor:pointer}
+.manage .note{display:block;margin-top:7px;color:var(--muted);font-size:11px;line-height:1.5}
+.manage .danger{background:#fffafa;margin:6px -16px -16px;padding:14px 16px 16px;border-top:1px solid #f0dcd9}
+.manage .danger h4{color:#a33a30}
+.manage #clearAllChecks{width:100%;background:#fff;border-color:#e3b8b3;color:#a33a30}
+.listpanel .hint{margin:0 0 10px}
+@media(max-width:650px){.panel>summary small{display:none}}
+.sync{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;padding:9px 12px;border-radius:10px;font-size:12px;line-height:1.5;border:1px solid var(--line);background:#f7f9f6;color:var(--muted)}
+.sync.ok{background:#eef5ef;border-color:#d3e4d7;color:#2f5f45}
+.sync.fail{background:#fff6f4;border-color:#f0d3ce;color:#a33a30}
+.sync span{flex:1 1 200px}
+.sync button{border:1px solid currentColor;background:#fff;color:inherit;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <img class="hero-emblem" alt="꿈꾸는교회" src="data:image/png;base64,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">
+  <h1>공동체성경읽기<br>180일 통독 플랜</h1>
+  <div class="hero-sub">꿈꾸는 교회 하반기 180일 통독(12조)</div>
+  <p>말씀을 읽고 체크하며, 해당 본문의 공동체성경읽기 영상을 찾아보세요.</p>
+  <div class="stats">
+    <div class="stat"><b id="completed">0</b><span>읽기 완료</span></div>
+    <div class="stat"><b id="remaining">180일</b><span>남은 분량</span></div>
+    <div class="stat"><b id="overdue">0일</b><span>밀린 분량</span></div>
+    <div class="stat"><b id="dday">-</b><span id="ddayLabel">완독까지</span></div>
+  </div>
+  <div class="hero-journey" aria-label="통독 진행률">
+    <div class="journey-head"><div><small>나의 통독 여정</small><b id="journeyCount">0 / 180일</b></div><small id="journeyPercent">0%</small></div>
+    <div class="journey-progress"><i id="journeyBar"></i></div><div class="journey-foot"><span id="journeyRemaining">180일 남음</span><span>180일 완독 목표</span></div>
+  </div>
+</header>
+<section class="today" id="todayCard">
+  <div><small id="todayLabel">오늘의 통독</small><h2 id="todayPassage">불러오는 중…</h2><p id="todayStatus"></p></div>
+  <div class="today-actions">
+  <a class="yt" id="todayYoutube" href="#" target="_blank" rel="noopener">▶ 오늘 영상 보기</a>
+  <button class="today-done" id="todayDoneBtn" type="button">오늘 통독 완료 체크</button>
+  </div>
+</section>
+<section class="calendar" id="calendarCard"><div class="calendar-title"><button id="prevMonth" aria-label="이전 달">‹</button><h3 id="calendarMonth"></h3><button id="nextMonth" aria-label="다음 달">›</button></div><div class="calendar-grid" id="calendarGrid"></div></section>
+<details class="panel manage" id="managePanel">
+  <summary><span>통독 관리 및 기록</span><small>필터 · 구간 체크 · 백업</small></summary>
+  <div class="panel-body">
+    <div class="group">
+      <h4>일정 보기</h4>
+      <div class="seg" id="seg" role="group" aria-label="일정 보기 필터">
+        <button type="button" data-v="all" class="on">전체 일정</button><button type="button" data-v="todo">읽기 전</button><button type="button" data-v="done">읽기 완료</button>
+      </div>
+      <select class="filter" id="filter" hidden><option value="all">전체 일정</option><option value="todo">읽기 전</option><option value="done">읽기 완료</option></select>
+    </div>
+    <div class="group">
+      <h4>구간 체크</h4>
+      <div class="range-tools"><label>시작 일차<input id="rangeStart" type="number" min="1" max="180" value="1"></label><label>종료 일차<input id="rangeEnd" type="number" min="1" max="180" value="30"></label><button id="checkRange" type="button">구간 체크</button><button id="uncheckRange" type="button">구간 해제</button></div>
+      <small id="bulkStatus" aria-live="polite"></small>
+    </div>
+    <div class="group">
+      <h4>데이터 관리</h4>
+      <div class="pair"><button id="exportData" type="button">기록 백업</button><button id="importData" type="button">기록 복원</button></div>
+      <small class="note">백업은 기록을 파일로 저장, 복원은 저장한 파일로 되돌립니다.</small>
+      <input id="importFile" type="file" accept="application/json,.json" hidden>
+    </div>
+    <div class="group danger">
+      <h4>전체 체크 해제</h4>
+      <button id="clearAllChecks" type="button">전체 체크 해제</button>
+      <small class="note">180일 전체 읽기 기록이 해제됩니다. 확인창이 한 번 더 나옵니다.</small>
+    </div>
+  </div>
+</details>
+<section class="kakao" id="kakaoCard" aria-label="카톡 인증 문구">
+  <b>카톡 인증 문구</b>
+  <p class="kakao-help">읽은 날짜를 눌러 선택하세요. 오늘 분량이 기본으로 선택되어 있어요.</p>
+  <div class="chips" id="kakaoChips"></div>
+  <div class="kakao-preview" id="kakaoPreview"></div>
+  <button class="kakao-copy" id="kakaoCopy" type="button">카톡 문구 복사</button>
+</section>
+<details class="panel listpanel" id="listPanel">
+  <summary><span>말씀 목록</span><small>180일 전체 일정</small></summary>
+  <div class="panel-body">
+<p class="hint">체크 상태는 현재 사용 중인 브라우저에 자동 저장됩니다. 빨간 유튜브 아이콘을 누르면 해당 일차의 영상으로 연결됩니다. 아이콘이 없는 날짜는 아직 영상 링크가 공유되지 않은 날입니다.</p>
+  <main class="list" id="list" aria-live="polite"></main>
+  </div>
+</details>
+<footer class="footer">
+  <b>통독 기간</b> · 2026.07.06(월) ~ 2027.01.01(금)<br>
+  날짜별 유튜브 재생목록 링크는 공유 시트에서 불러옵니다. 아직 공유되지 않은 날짜에는 유튜브 아이콘이 표시되지 않습니다.
+  <div class="sync busy" id="syncStatus"><span>시트 링크 확인 전</span><button type="button" id="syncRetry">다시 불러오기</button></div>
+</footer>
+</div>
+<button class="to-top" id="toTop" type="button" aria-label="맨 위로 이동" title="맨 위로">▲</button>
+<script>
+const readings = [
+'창1-6','창7-11','창12-19','창20-25','창26-31','창32-36','창37-43','창44-50','출1-7','출8-13','출14-19','출20-25','출26-33','출34-40','레1-5','레6-10','레11-19','레20-27','민1-6','민7-12','민13-18','민19-24','민25-30','민31-36','신1-5','신6-11','신12-18','신19-26','신27-30','신31-34',
+'수1-7','수8-13','수14-19','수20-24','삿1-6','삿7-12','삿13-17','삿18-21','룻1-4, 삼상1-3','삼상4-10','삼상11-17','삼상18-24','삼상25-31','삼하1-6','삼하7-12','삼하13-18','삼하19-24','왕상1-6','왕상7-11','왕상12-17','왕상18-22','왕하1-6','왕하7-12','왕하13-18','왕하19-25','대상1-9','대상10-16','대상17-23','대상24-29','대하1-7',
+'대하8-15','대하16-24','대하25-31','대하32-36','스1-5','스6-10','느1-7','느8-13','에1-10','욥1-7','욥8-14','욥15-21','욥22-28','욥29-35','욥36-42','시1-10','시11-20','시21-30','시31-40','시41-50','시51-60','시61-70','시71-80','시81-90','시91-100','시101-110','시111-118','시119','시120-135','시136-150',
+'잠1-7','잠8-14','잠15-21','잠22-31','전1-6','전7-12','아1-8','사1-7','사8-14','사15-21','사22-28','사29-35','사36-41','사42-48','사49-55','사56-61','사62-66','렘1-6','렘7-12','렘13-18','렘19-24','렘25-30','렘31-36','렘37-43','렘44-52','애1-5','겔1-7','겔8-14','겔15-21','겔22-28',
+'겔29-35','겔36-42','겔43-48','단1-6','단7-12','호1-7','호8-14','욜1-3, 암1-3','암4-9','옵, 욘1-4','미1-7','나1-3, 합1-3','습1-3, 학1-2','슥1-7','슥8-14','말1-4','마1-7','마8-13','마14-19','마20-24','마25-28','막1-5','막6-10','막11-16','눅1-6','눅7-11','눅12-16','눅17-21','눅22-24','요1-5',
+'요6-10','요11-15','요16-21','행1-6','행7-12','행13-18','행19-23','행24-28','롬1-5','롬6-11','롬12-16','고전1-8','고전9-16','고후1-7','고후8-13','갈1-6','엡1-6','빌1-4, 골1-4','살전, 살후','딤전','딤후, 딛, 몬','히1-7','히8-13','약1-5','벧전1-5','벧후1-3, 요일','요이, 요삼, 유다','계1-5','계6-15','계16-22'
+];
+const start = new Date(2026,6,6); // 2026-07-06
+const DAILY_PLAYLISTS = {
+  "1": "https://www.youtube.com/watch?v=NbGHNcPhlUY&list=PLkjWBm12NFm6d_Q7sKyoU_VyZjvyBbz4Y",
+  "2": "https://www.youtube.com/watch?v=bKRNGtp7AoA&list=PLkjWBm12NFm5aHYygnJvLbToGTROA-tKU",
+  "3": "https://www.youtube.com/watch?v=d0Xv7TxKb74&list=PLkjWBm12NFm6rtfhb0xyUbpSMr8SVwZNe",
+  "4": "https://www.youtube.com/watch?v=ZWlo6w7QjpY&list=PLkjWBm12NFm5OJ-_pd_4BzPo-G9X8oKe9",
+  "5": "https://www.youtube.com/watch?v=ooWAaS3szYI&list=PLkjWBm12NFm7QdyTFzZ9hnJzZwssJKOk7",
+  "6": "https://youtube.com/playlist?list=PLkjWBm12NFm5SaW9WNMOJe31Kp4hKBbqe&si=2VPE_kZ4nM_yfaby",
+  "7": "https://www.youtube.com/watch?v=2XisnIyDC0k&list=PLkjWBm12NFm4NQuKsOF-x3d5nSeukznS_",
+  "8": "https://youtube.com/playlist?list=PLkjWBm12NFm6uBr_X0RA0cM2s-CRANbAa&si=WttWud-h6NMpGITC",
+  "9": "https://m.youtube.com/playlist?list=PLkjWBm12NFm7ZFyG-RzsDYnHeaqMOrZuw",
+  "10": "https://www.youtube.com/playlist?list=PLkjWBm12NFm459L7gkB50b_NkZLYePHTW",
+  "11": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7LKaxZe7nDaznGyGjZNGTt",
+  "12": "https://www.youtube.com/playlist?list=PLkjWBm12NFm43VLDvig6PGNDJPL63Nty_",
+  "13": "https://www.youtube.com/playlist?list=PLkjWBm12NFm41HZb-Bu-Qc-vriMxcxkbL",
+  "14": "https://www.youtube.com/playlist?list=PLkjWBm12NFm62rDzaSvEVaREYYZ9BD_MG",
+  "15": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7kNw0Ojr3V1oulk068kKNo",
+  "16": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6BoDsaGWaIxIemVrO02opy",
+  "17": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4g52NqdLeWpoxbtg0g6eZU",
+  "18": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5t0amEaxhJN-Yw9_T6xuxY",
+  "19": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4eUgcgt9OwfIvbhloA9WNt",
+  "20": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4h_b6EPJ3rb3hvpO1IGYW1",
+  "21": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7uLHT05a6R8EuTWQ8sLZtH",
+  "22": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4xCFSlBgutchCpFSX8jF1D",
+  "23": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6dpllZt7WjSyHRD2Lqno-Z",
+  "24": "https://www.youtube.com/playlist?list=PLkjWBm12NFm41bCf2LoOIk5TYf1VNamFi",
+  "25": "https://www.youtube.com/playlist?list=PLkjWBm12NFm545gPm0sp5IheQNCk3a0te",
+  "26": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4ihfhPwLvwKsoaBSN6JUcB",
+  "27": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4LcWvz0-xzFTZ3zzpkRlm6",
+  "28": "https://www.youtube.com/playlist?list=PLkjWBm12NFm63cmJ9QvEeIYomcvy7TqFA",
+  "29": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4BbRmTynIf8RMM1liKh7Oo",
+  "30": "https://www.youtube.com/playlist?list=PLkjWBm12NFm50-RbfiOmKRtlm50TR7X3-",
+  "31": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5DWjp6SKT1PaMiF8ymCQOy",
+  "32": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5twi1sbToRTDL0nx5biqwJ",
+  "33": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4KmoufLVDSiQzuBjT0-EsT",
+  "34": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5btzHB-_hxn-5KQTUuK_SH",
+  "35": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7oLZ2Q1FDWv7uFUNtDuv4-",
+  "36": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6XovCVZtLn5st3ubj6aQSh",
+  "37": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5L4bdBkG23ms_Lf24RKkF4",
+  "38": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6aDiJ901UK6J4q_ybHKCqR",
+  "39": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5N0zk49TDG6qo2VEOiqpCl",
+  "40": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5o-qiiIZS-jwo1mYao0to_",
+  "41": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6HFIPIrMfgwJi7dK_x55Db",
+  "42": "https://youtube.com/playlist?list=PLkjWBm12NFm7vfflTCPO5sgcLCiIzTDc3&si=rDBHYdmz7ZGhnzZn",
+  "43": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4QDtVJFU1WDGZrTG49l45s",
+  "44": "https://www.youtube.com/playlist?list=PLkjWBm12NFm73rB6GQqb6k15qydOZAYpX",
+  "45": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5OPztTn4RWD_AaHO-2TIfN",
+  "46": "https://www.youtube.com/watch?v=qLrjhID4GLw&list=PLqkTZVOviqrrEtgCAuc8MUulPg5lKKHEJ",
+  "47": "https://www.youtube.com/watch?v=gMuJIQJVc2w&list=PLqkTZVOviqrohjFTRLaMXPkTuBNHt9W1o",
+  "48": "https://www.youtube.com/watch?v=i2MYC_849DQ&list=PLqkTZVOviqrrqvd0Ilfylv9NZN_LSfnjZ",
+  "49": "https://www.youtube.com/watch?v=njTxJewp-Lw&list=PLqkTZVOviqrpL6sJyqHtzqD6h2dWMJmnT",
+  "50": "https://www.youtube.com/watch?v=6KV_rdXU2Sc&list=PLqkTZVOviqrrmWNCl6XzusL6q7M11M712",
+  "51": "https://www.youtube.com/watch?v=7GZ2W_C1S8Y&list=PLqkTZVOviqroJBtkWFyr65oD1vhS5yLPw",
+  "52": "https://www.youtube.com/watch?v=9I0Y9MDv1s8&list=PLqkTZVOviqrpjSOUKBDEYd6ntESlLjzqD",
+  "53": "https://www.youtube.com/watch?v=HsTb5zt-tGk&list=PLqkTZVOviqrrRkTL3bOAAQeiTDBEcyrAX",
+  "54": "https://www.youtube.com/watch?v=8p6m7CE3LJ4&list=PLqkTZVOviqronWVX-8ZTpFSDAvsg75WlZ",
+  "55": "https://www.youtube.com/watch?v=TAPnArRKLGI&list=PLqkTZVOviqrol_N4-6gWOG1RfaDB6UAa4",
+  "56": "https://www.youtube.com/watch?v=xwkcZq4h9Fk&list=PLqkTZVOviqrqAG-TqeGctcHVol5JqT-p_",
+  "57": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6GNBB61MXLm7ob1ewfTStN",
+  "58": "https://www.youtube.com/playlist?list=PLkjWBm12NFm67-UYpgOOGdblUWMHs5iCo",
+  "59": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4_s0wwQRuZz1oBI3mKPo4J",
+  "60": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7s0PJKIIq_BrIWIc6lYoRQ",
+  "61": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5q3mLnlaP-4C8m61i3AlGY",
+  "62": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5K4bv0SMTrebN3kSmkcMkY",
+  "63": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7-IaNn_7_4tTlwehi2RBZw",
+  "64": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7JrIk6b0rlLOb3drShfVK_",
+  "65": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5UH29HIy7KA30QSgqLlY90",
+  "66": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5BQpWQKcQ5ySbzpK1Ihlxk",
+  "67": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5965WzlezeCw1qUbm79yu2",
+  "68": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7vcztgczHij1WQdlI0oryq",
+  "69": "https://www.youtube.com/playlist?list=PLkjWBm12NFm71u8iBMnpCIPUJhn1eYXq3",
+  "70": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4q93c3_V2cLqP9PrgqoTCl",
+  "71": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4BiHXIOsP3sx8BKWGablOz",
+  "72": "https://youtube.com/playlist?list=PLkjWBm12NFm7j056fJ-S5RABL7areMet0&si=ttqvq6CARoacP4Fb",
+  "73": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5K9ak7PJ1foo3F8L4FTTSy",
+  "74": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6x8iTAR0VoY3MVhdZ09wiB",
+  "75": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7pl-BOm8azt6_TmK8GUND3",
+  "76": "https://www.youtube.com/playlist?list=PLkjWBm12NFm62ossKP3epzr-jXo6n9pLG",
+  "77": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6oHof3LjbiZLsXuSYD8Ko6",
+  "78": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4tVnlizAO0q08Gj6X73b1G",
+  "79": "https://www.youtube.com/playlist?list=PLkjWBm12NFm75HXucMwkuW5IpQ6sUBl6y",
+  "80": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4xwopdyYGtSdSipm9cG_x0",
+  "81": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4LWkqAgRy5NolV-jdsqMZd",
+  "82": "https://www.youtube.com/playlist?list=PLkjWBm12NFm48qb4vUjT52NXCQDkUWVFa",
+  "84": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6yZ1r36ZtoA76xxbwDk0zs",
+  "85": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5uFNR4AMQLoevekd9L5vBv",
+  "86": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6IbtCmwlhiTFAkCSpot5o4",
+  "87": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5G2pYgNjrN95xqjyvxxltS",
+  "88": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6jqaHhFFOd1c7VqEO4f0K7",
+  "89": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6MNltQ4dpvZBQIlWXs-r04",
+  "90": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7MhDTTOW3gh18u-Qlkkxtx",
+  "91": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6gEPWVWD2w-L8-OWP_K8Wa",
+  "92": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7yyBgn_-OKz60WFLRaZqMB",
+  "93": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6c1xaruELFKkp3h1xmI0I1",
+  "94": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5YHoYrzbTQuHwUI9dlj4Mk",
+  "95": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6t_2vbevBrVeSJkk0txE3c",
+  "98": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6irWx06IT4F3d_Y-_yGkfS",
+  "99": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4UkzPqFwF9k0FOapN9ROh8",
+  "100": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5IgbdL2mHamP8jmR12nwNr",
+  "101": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4vB3Mk54tJjYJ5YuGQjeZ_",
+  "103": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6E_ik-BCmkOwRO0w085UGf",
+  "104": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7UsFiedwyCpXvZnCrPSkQz",
+  "105": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5NT0FktI0ZAlDprv2NdGl1",
+  "106": "https://www.youtube.com/playlist?list=PLkjWBm12NFm62WTA9XE5GOnVqcBCRNVHg",
+  "107": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6M0tghrev2hafDh2qr-gY3",
+  "108": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7uOpYbEsIwhrKlAp3SHPGK",
+  "109": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4ihI7-wuIosF_kmH8bvw_j",
+  "110": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5XnFLDLqSLSupXF4w5qFl3",
+  "111": "https://www.youtube.com/playlist?list=PLkjWBm12NFm78TMz1ak7_jbOkHw8LbjmP",
+  "112": "https://www.youtube.com/playlist?list=PLkjWBm12NFm634-ldSyg57-wcUkb3NEic",
+  "113": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6jRI-u6oEh4aIuYHESZLHg",
+  "114": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6inaZBD6EF5aZOw_Z8xiUG",
+  "115": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6UjDHPzXv6sxgVBR6Pmn8q",
+  "116": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5g5Mkhi4LKHwI1-LBy4VSx",
+  "117": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6eW1Y9wuBqCjPUx_v8YTbc",
+  "118": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7leFiV_tqBzlrXajJ3a4-o",
+  "119": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4eEVV3nZKHtwsWkWTT87oy",
+  "120": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5E7ahm5i68PfK2OZsGh3hc",
+  "121": "https://www.youtube.com/playlist?list=PLkjWBm12NFm53qvdr4UeDgMijNhCdlwom",
+  "122": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7nyZb2nwbTArJvFNpmA4eG",
+  "123": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4lImUdsRocFKYcGjf6sTAz",
+  "124": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7nrucIgloxSYsyUK_vT-1d",
+  "125": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4v9KPDq1X1hBpYKn5KSyTp",
+  "126": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5U6dCgftJBVwjwHDNrRzUM",
+  "127": "https://youtube.com/playlist?list=PLkjWBm12NFm6az3bbMaEx9wocd-Xec2BT&si=t9DveISIhsDSKyCA",
+  "128": "https://youtube.com/playlist?list=PLkjWBm12NFm7PLcU_VCRy12mPH5oPMdV_&si=XCtQDSJK8QlLC8e3",
+  "129": "https://youtube.com/playlist?list=PLkjWBm12NFm7y7GPn0C_GtFrGyPJPdJ9Y&si=xkm9O4LcWNS3_8r8",
+  "130": "https://youtube.com/playlist?list=PLkjWBm12NFm64VhtS4yuwyIecMq_8Sc8M&si=ZcGuR43GqQUUhzjN",
+  "131": "https://youtube.com/playlist?list=PLkjWBm12NFm6sqBSVwsUQwnVMef_ktEea&si=CrMe8FJ_zxlT7XvS",
+  "132": "https://youtube.com/playlist?list=PLkjWBm12NFm6cfa2PY-cXYppWqubo9nOW&si=QMfG-mXHeSV5Pmp_",
+  "133": "https://youtube.com/playlist?list=PLkjWBm12NFm7Rf3MZ5JVuNvXxVeeNRohw&si=rv80KZlQrDk8g29l",
+  "134": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7-q02dWANYjsBD_K8D3Hs-",
+  "135": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4thx9pD0RCdbZpeNM3m6q5",
+  "136": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6pVv49QcR8VeOuhnwiMFn5",
+  "137": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7CrOzX0HR782kr1uJN_KDc",
+  "138": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6gFmFzo72it_qEOjW40YMa",
+  "139": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4_Ox6YfXW5vkem_RSG3DWJ",
+  "140": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6I1SZJHt5wRJuo7QmCTNPA",
+  "141": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5WQDjDcN7kZdWeHCKw8rLs",
+  "142": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6pzYpTRVR6sBxoOO6SkXJW",
+  "143": "https://www.youtube.com/playlist?list=PLkjWBm12NFm5aLeQdvoamCM4lbRqDfo82",
+  "144": "https://www.youtube.com/playlist?list=PLkjWBm12NFm52hBcURylNp8ZsysMB9QHd",
+  "145": "https://www.youtube.com/playlist?list=PLkjWBm12NFm57a9T4yshqDVKwyuCIEfKc",
+  "83": "https://www.youtube.com/playlist?list=PLkjWBm12NFm7j_hIbhvm2_F4QYk0nHRem",
+  "96": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6MUyPcM1x83SO5BrWlZjVk",
+  "97": "https://www.youtube.com/playlist?list=PLkjWBm12NFm6Yt66iLC0AXvnZMIcLjgqQ",
+  "102": "https://www.youtube.com/playlist?list=PLkjWBm12NFm4AwuwMascwTqWzuEO-ORYT",
+};
+
+function youtubeUrl(day){
+ return DAILY_PLAYLISTS[String(day)] || '';
+}
+function loadDone(){try{const raw=JSON.parse(localStorage.getItem('prs180_done')||'[]');if(Array.isArray(raw))return new Set(raw.filter(x=>Number.isInteger(x)&&x>=1&&x<=180))}catch(e){}return new Set()}
+let done = loadDone(); // 각 브라우저별 개인 진행 기록 (저장 키: prs180_done)
+function saveDone(){try{localStorage.setItem('prs180_done',JSON.stringify([...done].sort((a,b)=>a-b)))}catch(e){}}
+const list = document.getElementById('list');
+const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+const weekday = ['일','월','화','수','목','금','토'];
+// 날짜 계산: 로컬 달력 날짜(연/월/일)를 UTC 일수로 바꿔 계산 → 시간대·서머타임으로 하루씩 밀리지 않음
+const DAY_MS = 86400000;
+const dayNum = (y,m,d) => Date.UTC(y,m,d) / DAY_MS;
+const START_NUM = dayNum(2026,6,6), TARGET_NUM = dayNum(2027,0,1);
+let today, todayNum, todayDay;
+function refreshToday(){const n=new Date();today=new Date(n.getFullYear(),n.getMonth(),n.getDate());todayNum=dayNum(n.getFullYear(),n.getMonth(),n.getDate());todayDay=todayNum-START_NUM+1}
+refreshToday();
+function updateDday(){
+ const diff = TARGET_NUM - todayNum;
+ const el = document.getElementById('dday'), lb = document.getElementById('ddayLabel');
+ if(!el) return;
+ if(diff > 0){ el.textContent = `D-${diff}`; lb.textContent = '완독까지'; }
+ else if(diff === 0){ el.textContent = '완독일'; lb.textContent = '오늘'; }
+ else { el.textContent = '종료'; lb.textContent = '통독 기간'; }
+}
+function updateTodayCard(){
+ const inPlan = todayDay >= 1 && todayDay <= readings.length;
+ const link = document.getElementById('todayYoutube');
+ const doneBtn = document.getElementById('todayDoneBtn');
+ if(!inPlan){
+  // 통독 기간 외: 잘못된 일차/본문을 표시하지 않음
+  document.getElementById('todayLabel').textContent = '오늘의 통독';
+  document.getElementById('todayPassage').textContent = todayDay < 1 ? '통독 시작 전' : '통독 기간 종료';
+  document.getElementById('todayStatus').textContent = todayDay < 1 ? '통독은 2026년 7월 6일에 시작합니다.' : '180일 통독 기간이 끝났습니다.';
+  link.style.display = 'none'; doneBtn.style.display = 'none';
+  return;
+ }
+ link.style.display = ''; doneBtn.style.display = '';
+ const day = todayDay;
+ const d = new Date(2026, 6, 6 + day - 1);
+ document.getElementById('todayLabel').textContent = `오늘의 통독 · ${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${weekday[d.getDay()]}요일`;
+ document.getElementById('todayPassage').textContent = `${day}일차 · ${readings[day-1]}`;
+ document.getElementById('todayStatus').textContent = done.has(day) ? '오늘 읽은 본문을 체크해 두었습니다.' : '오늘의 본문을 읽고 체크해 보세요.';
+ const videoUrl = youtubeUrl(day);
+ if(videoUrl){
+  link.href = videoUrl; link.classList.remove('no-video'); link.textContent = '▶ 오늘 영상 보기'; link.style.pointerEvents = 'auto'; link.removeAttribute('aria-disabled');
+ }else{
+  link.removeAttribute('href'); link.classList.add('no-video'); link.textContent = '영상 링크 미공유'; link.style.pointerEvents = 'none'; link.setAttribute('aria-disabled','true');
+ }
+}
+function updateStats(){const n=done.size;const pct=Math.round(n/180*100);document.getElementById('completed').textContent=n;document.getElementById('remaining').textContent=(180-n)+'일';{const upto=Math.min(todayDay,180);let late=0;for(let d=1;d<=upto;d++)if(!done.has(d))late++;document.getElementById('overdue').textContent=late+'일';}document.getElementById('journeyCount').textContent=`${n} / 180일`;document.getElementById('journeyPercent').textContent=`${pct}%`;document.getElementById('journeyBar').style.width=pct+'%';document.getElementById('journeyRemaining').textContent=`${180-n}일 남음`;const b=document.getElementById('todayDoneBtn');b.classList.toggle('is-done',done.has(todayDay));b.textContent=done.has(todayDay)?'✓ 오늘 통독 완료 · 체크 해제':'오늘 통독 완료 체크';}
+let calendarCursor=new Date(today.getFullYear(),today.getMonth(),1);
+function renderCalendar(){const grid=document.getElementById('calendarGrid');grid.innerHTML='';document.getElementById('calendarMonth').textContent=`${calendarCursor.getFullYear()}년 ${calendarCursor.getMonth()+1}월`;['일','월','화','수','목','금','토'].forEach(w=>{const el=document.createElement('div');el.className='cal-day week';el.textContent=w;grid.append(el)});const first=calendarCursor.getDay();for(let i=0;i<first;i++){const blank=document.createElement('div');blank.className='cal-day out';grid.append(blank)}const count=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,0).getDate();for(let dnum=1;dnum<=count;dnum++){const d=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth(),dnum);const day=dayNum(d.getFullYear(),d.getMonth(),d.getDate())-START_NUM+1;const cell=document.createElement('div');cell.className='cal-day';cell.textContent=dnum;if(day>=1&&day<=180){cell.classList.add('go');cell.setAttribute('role','button');cell.tabIndex=0;cell.setAttribute('aria-label',`${day}일차 말씀으로 이동`);cell.addEventListener('click',()=>goToDay(day));cell.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();goToDay(day)}})}if(day>=1&&day<=180&&done.has(day))cell.classList.add('done');if(d.getTime()===today.getTime())cell.classList.add('is-today');grid.append(cell)}}
+
+const YT_ICON='<svg viewBox="0 0 28 20" width="28" height="20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#f00"/><path d="M11 5.5v9l8-4.5z" fill="#fff"/></svg>';
+function render(){
+ const f=document.getElementById('filter').value;list.innerHTML='';
+ readings.forEach((passage,i)=>{const day=i+1;const d=new Date(start);d.setDate(start.getDate()+i);const isDone=done.has(day);const isToday=day===todayDay;
+  if(f==='todo'&&isDone)return;if(f==='done'&&!isDone)return;
+  const el=document.createElement('article');el.id='day-'+day;el.className='item'+(isDone?' done':'')+(isToday?' today-item':'');
+  const cb=document.createElement('input');cb.type='checkbox';cb.className='check';cb.checked=isDone;cb.setAttribute('aria-label',day+'일차 읽음 체크');cb.addEventListener('change',()=>{if(cb.checked)done.add(day);else done.delete(day);saveDone();refreshAll()});
+  const dn=document.createElement('div');dn.className='dnum';dn.textContent=`${day}일`;
+  const mid=document.createElement('div');mid.className='mid';const title=document.createElement('div');title.className='passage';title.textContent=passage;const dateLine=document.createElement('div');dateLine.className='day';dateLine.textContent=`${fmt(d)} (${weekday[d.getDay()]})`;mid.append(dateLine,title);
+  const actions=document.createElement('div');actions.className='item-actions';if(isToday){const tag=document.createElement('span');tag.className='tag';tag.textContent='오늘';actions.append(tag)}
+  const videoUrl=youtubeUrl(day);if(videoUrl){const a=document.createElement('a');a.className='yt-icon';a.href=videoUrl;a.target='_blank';a.rel='noopener';a.setAttribute('aria-label',`${day}일차 영상 보기`);a.title='영상 보기';a.innerHTML=YT_ICON;actions.append(a)}
+  el.append(cb,dn,mid,actions);list.append(el);
+ });
+ if(!list.children.length){const e=document.createElement('div');e.className='empty';e.textContent='해당하는 일정이 없습니다.';list.append(e)}
+}
+document.getElementById('todayDoneBtn').addEventListener('click',()=>{if(todayDay<1||todayDay>180)return;if(done.has(todayDay))done.delete(todayDay);else done.add(todayDay);saveDone();refreshAll()});document.getElementById('prevMonth').addEventListener('click',()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);renderCalendar()});document.getElementById('nextMonth').addEventListener('click',()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);renderCalendar()});document.getElementById('exportData').addEventListener('click',()=>{const payload={app:'prs180',version:1,done:[...done],exportedAt:new Date().toISOString()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='bible-reading-180-backup.json';a.click();URL.revokeObjectURL(url)});document.getElementById('importData').addEventListener('click',()=>document.getElementById('importFile').click());document.getElementById('importFile').addEventListener('change',ev=>{const file=ev.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data||data.app!=='prs180'||!Array.isArray(data.done))throw new Error('bad backup');if(!data.done.every(x=>Number.isInteger(x)&&x>=1&&x<=180))throw new Error('bad range');const restored=new Set(data.done);/* 검증 통과 후에만 기존 기록 교체 */done=restored;saveDone();refreshAll();alert('통독 기록을 복원했습니다.')}catch{alert('백업 파일 형식이 올바르지 않거나 일차 범위(1~180)를 벗어났습니다. 기존 기록은 그대로 유지됩니다.')}ev.target.value=''};reader.readAsText(file)});
+document.getElementById('filter').addEventListener('change',render);
+function saveBulkChanges(message){saveDone();refreshAll();document.getElementById('bulkStatus').textContent=message;}
+document.getElementById('clearAllChecks').addEventListener('click',()=>{if(confirm('180일 전체 체크를 해제할까요?')){done.clear();saveBulkChanges('전체 체크를 해제했습니다.')}});
+function changeRange(shouldCheck){const a=Number(document.getElementById('rangeStart').value),b=Number(document.getElementById('rangeEnd').value);if(!Number.isInteger(a)||!Number.isInteger(b)||a<1||b>180||a>b){alert('1~180일 사이의 올바른 구간을 입력해 주세요.');return;}for(let d=a;d<=b;d++){if(shouldCheck)done.add(d);else done.delete(d);}saveBulkChanges(`${a}~${b}일차를 ${shouldCheck?'체크':'해제'}했습니다.`)}
+document.getElementById('checkRange').addEventListener('click',()=>changeRange(true));document.getElementById('uncheckRange').addEventListener('click',()=>changeRange(false));
+function syncSeg(){const v=document.getElementById('filter').value;document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===v))}
+document.querySelectorAll('#seg button').forEach(b=>b.addEventListener('click',()=>{const sel=document.getElementById('filter');sel.value=b.dataset.v;sel.dispatchEvent(new Event('change'));syncSeg();document.getElementById('listPanel').open=true}));
+function goToDay(day){
+ const lp=document.getElementById('listPanel');if(lp)lp.open=true;
+ const sel=document.getElementById('filter');if(sel.value!=='all'){sel.value='all';render();syncSeg()}
+ const el=document.getElementById('day-'+day);if(!el)return;
+ el.scrollIntoView({behavior:'smooth',block:'center'});
+ el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1800);
+}
+const toTopBtn=document.getElementById('toTop');
+toTopBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+function updateToTop(){toTopBtn.classList.toggle('show',window.scrollY>500)}
+window.addEventListener('scroll',updateToTop,{passive:true});
+// ===== 카톡 인증 문구 =====
+const kakaoSel=new Set();let kakaoTouched=false,kakaoCopyTimer=null;
+const mdOf=d=>{const t=new Date(2026,6,6+d-1);return `${t.getMonth()+1}/${t.getDate()}`};
+function kakaoCandidates(){const last=Math.min(todayDay,180);if(last<1)return[];const set=new Set();for(let d=Math.max(1,last-4);d<=last;d++)set.add(d);for(let d=1;d<=last;d++)if(!done.has(d))set.add(d);return[...set].sort((a,b)=>a-b).slice(-14).reverse()}
+function kakaoMessage(){const ds=[...kakaoSel].sort((a,b)=>a-b);return ds.length?ds.map(d=>`${mdOf(d)}(${d}일차)`).join(' ')+' 읽었습니다':''}
+function renderKakao(){
+ const card=document.getElementById('kakaoCard'),cands=kakaoCandidates();
+ if(!cands.length){card.style.display='none';return}
+ card.style.display='';
+ [...kakaoSel].forEach(d=>{if(!cands.includes(d))kakaoSel.delete(d)});
+ if(!kakaoTouched){kakaoSel.clear();if(cands.includes(todayDay))kakaoSel.add(todayDay)}
+ const chips=document.getElementById('kakaoChips');chips.innerHTML='';
+ cands.forEach(d=>{const b=document.createElement('button');b.type='button';const isRead=done.has(d);b.className='chip'+(isRead?' read':' late')+(kakaoSel.has(d)?' on':'');b.setAttribute('aria-pressed',kakaoSel.has(d)?'true':'false');b.textContent=`${isRead?'✓ ':''}${mdOf(d)} · ${d}일차`;b.addEventListener('click',()=>{kakaoTouched=true;if(kakaoSel.has(d))kakaoSel.delete(d);else kakaoSel.add(d);renderKakao()});chips.append(b)});
+ const msg=kakaoMessage();document.getElementById('kakaoPreview').textContent=msg||'보고할 날짜를 선택해 주세요.';
+ const btn=document.getElementById('kakaoCopy');btn.disabled=!msg;if(!kakaoCopyTimer)btn.textContent='카톡 문구 복사';
+}
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){}
+ try{const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.append(ta);ta.select();ta.setSelectionRange(0,t.length);const ok=document.execCommand('copy');ta.remove();return ok}catch(e){return false}}
+document.getElementById('kakaoCopy').addEventListener('click',async()=>{const msg=kakaoMessage();if(!msg)return;const ok=await copyText(msg);const btn=document.getElementById('kakaoCopy');btn.textContent=ok?'✓ 복사됨! 카톡에 붙여넣으세요':'복사 실패 · 위 문구를 길게 눌러 복사하세요';clearTimeout(kakaoCopyTimer);kakaoCopyTimer=setTimeout(()=>{kakaoCopyTimer=null;renderKakao()},2500)});
+function refreshAll(){render();updateStats();updateTodayCard();renderCalendar();renderKakao()}
+refreshAll();updateDday();updateToTop();
+// 날짜가 바뀌면(자정 경과, 탭 복귀) 오늘 일차·본문·D-day 자동 갱신
+function checkDateChange(){const prev=todayNum;refreshToday();if(todayNum!==prev){updateDday();refreshAll()}}
+setInterval(checkDateChange,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkDateChange()});
+
+// ===== 공유 구글 시트(일차 | 링크)에서 날짜별 영상 링크 불러오기 =====
+// 시트에 링크가 있으면 내장 링크 대신 사용하고, 비어 있거나 불러오기에 실패하면 내장 링크를 그대로 씁니다.
+const SHEET_ID = '1b1xTceb4fwtMVMxuKC3dwLlZ6l268qmllFG-ebhwB70';
+const SHEET_PUBLISHED_CSV = ''; // '웹에 게시 → CSV' 주소가 있으면 여기에 붙여넣기 (우선 사용)
+const SHEET_URLS = [SHEET_PUBLISHED_CSV, `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=0`].filter(Boolean);
+const LINKS_CACHE_KEY = 'prs180_links_cache';
+const YT_RE = /^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//i; // 유튜브 주소만 허용
+function parseCsv(text){const rows=[];let row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i];if(q){if(c==='"'){if(text[i+1]==='"'){cell+='"';i++}else q=false}else cell+=c}else if(c==='"')q=true;else if(c===','){row.push(cell);cell=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);rows.push(row);row=[];cell=''}else cell+=c}if(cell!==''||row.length){row.push(cell);rows.push(row)}return rows}
+function applySheetLinks(map){let n=0;for(const k in map){const d=Number(k),u=String(map[k]||'').trim();if(Number.isInteger(d)&&d>=1&&d<=180&&YT_RE.test(u)){DAILY_PLAYLISTS[String(d)]=u;n++}}return n}
+let lastSheetFetch = 0;
+function setSync(cls,msg){const el=document.getElementById('syncStatus');if(!el)return;el.className='sync '+cls;el.querySelector('span').textContent=msg}
+function hhmm(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function jsonpLinks(){return new Promise((resolve,reject)=>{
+ const cb='__prsSheetCb'+Date.now();const sc=document.createElement('script');let done=false;
+ const fin=(fn,v)=>{if(done)return;done=true;clearTimeout(tm);try{delete window[cb]}catch(e){window[cb]=undefined}sc.remove();fn(v)};
+ const tm=setTimeout(()=>fin(reject,new Error('timeout')),8000);
+ window[cb]=data=>{try{if(!data||data.status!=='ok')return fin(reject,new Error('status'));const map={};(data.table.rows||[]).forEach(r=>{const c=r.c||[];const d=parseInt(c[0]&&c[0].v,10);const u=c[1]&&c[1].v;if(Number.isInteger(d)&&u)map[d]=String(u)});fin(resolve,map)}catch(e){fin(reject,e)}};
+ sc.onerror=()=>fin(reject,new Error('load'));
+ sc.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cb}&gid=0&_=${Date.now()}`;
+ document.head.appendChild(sc)})}
+async function loadSheetLinks(){
+ lastSheetFetch = Date.now();
+ setSync('busy','시트 링크 불러오는 중…');
+ let why='';
+ for(const url of SHEET_URLS){
+  try{
+   const ctl = new AbortController(), t = setTimeout(()=>ctl.abort(), 8000);
+   const res = await fetch(url, {cache:'no-store', signal:ctl.signal}); clearTimeout(t);
+   if(!res.ok){why='시트 응답 오류('+res.status+') · 공유 설정을 확인하세요';continue}
+   const text = await res.text();
+   const map = {}; parseCsv(text).forEach(r=>{const d=parseInt(r[0],10);if(Number.isInteger(d)&&r[1])map[d]=r[1]});
+   const n = applySheetLinks(map);
+   if(n > 0){ try{localStorage.setItem(LINKS_CACHE_KEY,JSON.stringify(map))}catch(e){} refreshAll(); setSync('ok','시트 링크 동기화 성공 · '+hhmm()+' · '+'링크 총 '+n+'개 확인'); return; }
+   why = /<html|<!doctype/i.test(text) ? '로그인 화면이 반환됨 · 시트 공유를 "링크가 있는 모든 사용자(뷰어)"로 바꿔주세요' : '시트에서 유효한 유튜브 링크를 찾지 못함';
+  }catch(e){ why = e&&e.name==='AbortError' ? '응답 시간 초과(8초)' : '인터넷 연결 또는 접근 차단 문제'; console.warn('시트 링크 불러오기 실패', e); }
+ }
+ try{
+  const map=await jsonpLinks();const n=applySheetLinks(map);
+  if(n>0){try{localStorage.setItem(LINKS_CACHE_KEY,JSON.stringify(map))}catch(e){}refreshAll();setSync('ok','시트 링크 동기화 성공(보조 방식) · '+hhmm()+' · '+'링크 총 '+n+'개 확인');return}
+  why='시트에서 유효한 유튜브 링크를 찾지 못함';
+ }catch(e){ if(!why||/인터넷/.test(why)) why='시트에 접근할 수 없음 · 공유 설정이 "링크가 있는 모든 사용자(뷰어)"인지, 인터넷 연결이 되는지 확인하세요'; }
+ setSync('fail','시트 링크 동기화 실패 · 저장된 링크 사용 중 · '+why);
+}
+try{ if(applySheetLinks(JSON.parse(localStorage.getItem(LINKS_CACHE_KEY)||'{}')) > 0) refreshAll(); }catch(e){}
+loadSheetLinks();
+document.getElementById('syncRetry').addEventListener('click',loadSheetLinks);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden && Date.now()-lastSheetFetch>300000) loadSheetLinks()});
+</script>
+</body></html>
