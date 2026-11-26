@@ -116,16 +116,15 @@
   <button class="today-done" id="todayDoneBtn" type="button">오늘 통독 완료 체크</button>
   </div>
 </section>
-<section class="calendar" id="calendarCard"><div class="calendar-title"><button id="prevMonth" aria-label="이전 달">‹</button><h3 id="calendarMonth"></h3><button id="nextMonth" aria-label="다음 달">›</button></div><div class="calendar-grid" id="calendarGrid"></div></section>
 <details class="panel manage" id="managePanel">
   <summary><span>통독 관리 및 기록</span><small>필터 · 구간 체크 · 백업</small></summary>
   <div class="panel-body">
     <div class="group">
       <h4>일정 보기</h4>
       <div class="seg" id="seg" role="group" aria-label="일정 보기 필터">
-        <button type="button" data-v="all" class="on">전체 일정</button><button type="button" data-v="todo">읽기 전</button><button type="button" data-v="done">읽기 완료</button>
+        <button type="button" data-v="all">전체 일정</button><button type="button" data-v="todo" class="on">읽기 전</button><button type="button" data-v="done">읽기 완료</button>
       </div>
-      <select class="filter" id="filter" hidden><option value="all">전체 일정</option><option value="todo">읽기 전</option><option value="done">읽기 완료</option></select>
+      <select class="filter" id="filter" hidden><option value="all">전체 일정</option><option value="todo" selected>읽기 전</option><option value="done">읽기 완료</option></select>
     </div>
     <div class="group">
       <h4>구간 체크</h4>
@@ -145,13 +144,7 @@
     </div>
   </div>
 </details>
-<section class="kakao" id="kakaoCard" aria-label="카톡 인증 문구">
-  <b>카톡 인증 문구</b>
-  <p class="kakao-help">읽은 날짜를 눌러 선택하세요. 오늘 분량이 기본으로 선택되어 있어요.</p>
-  <div class="chips" id="kakaoChips"></div>
-  <div class="kakao-preview" id="kakaoPreview"></div>
-  <button class="kakao-copy" id="kakaoCopy" type="button">카톡 문구 복사</button>
-</section>
+<section class="calendar" id="calendarCard"><div class="calendar-title"><button id="prevMonth" aria-label="이전 달">‹</button><h3 id="calendarMonth"></h3><button id="nextMonth" aria-label="다음 달">›</button></div><div class="calendar-grid" id="calendarGrid"></div></section>
 <details class="panel listpanel" id="listPanel">
   <summary><span>말씀 목록</span><small>180일 전체 일정</small></summary>
   <div class="panel-body">
@@ -159,6 +152,13 @@
   <main class="list" id="list" aria-live="polite"></main>
   </div>
 </details>
+<section class="kakao" id="kakaoCard" aria-label="카톡 인증 문구">
+  <b>카톡 인증 문구</b>
+  <p class="kakao-help">읽은 날짜를 눌러 선택하세요. 오늘 분량이 기본으로 선택되어 있어요.</p>
+  <div class="chips" id="kakaoChips"></div>
+  <div class="kakao-preview" id="kakaoPreview"></div>
+  <button class="kakao-copy" id="kakaoCopy" type="button">카톡 문구 복사</button>
+</section>
 <footer class="footer">
   <b>통독 기간</b> · 2026.07.06(월) ~ 2027.01.01(금)<br>
   날짜별 유튜브 재생목록 링크는 공유 시트에서 불러옵니다. 아직 공유되지 않은 날짜에는 유튜브 아이콘이 표시되지 않습니다.
